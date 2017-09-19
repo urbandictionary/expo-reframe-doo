@@ -4,7 +4,8 @@
             [re-frame.core :as rf]
             re-frame.db
             [urbandictionary-app.handlers :as handlers]
-            [urbandictionary-app.db :as db]))
+            [urbandictionary-app.db :as db]
+            urbandictionary-app.subs))
 
 (deftest my-test
          (is (= 2 2)))
@@ -16,3 +17,7 @@
          (rf/dispatch-sync [:set-greeting "hi mom"])
          (is (= "hi mom" (:greeting @re-frame.db/app-db))))
 
+(deftest subscribe-test
+         (let [greeting (rf/subscribe [:get-greeting])]
+              (rf/dispatch-sync [:set-greeting "hi moms"])
+              (is (= "hi moms" @greeting))))
